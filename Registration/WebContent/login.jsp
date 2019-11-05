@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.URI"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +22,13 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
+          <c:if test="${errorString != NULL}">
+          	<h4 style="color:red;text-align:center"><b><c:out value="${errorString}"/></b> </h4>
+          </c:if>
+          
+          
             <h5 class="card-title text-center">Sign In</h5>
+            
             <form class="form-signin" method="POST" action="${pageContext.request.contextPath}/login">
               <div class="form-label-group">
                 <input type="email" id="inputEmail" class="form-control" name="email" value= "${user.email}" placeholder="email" required autofocus>

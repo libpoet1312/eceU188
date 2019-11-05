@@ -41,7 +41,7 @@
 							<h2 class="card-title text-center">
 								Welcome
 								<br>
-								<b><c:out value="${sessionScope.user.getUserName()}"/></b>
+								<h1 style="text-align:center" ><b> <c:out value="${sessionScope.user.getUserName()}"/></b></h1>
 								
 							</h2>
 							
