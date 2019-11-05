@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import beans.User;
 import connector.*;
+import utils.DBUtils;
 
 public class UserDAO {
 	public int registerUser(User user) throws ClassNotFoundException {
@@ -17,10 +18,17 @@ public class UserDAO {
 
 		System.out.println("EDW");
 		try (Connection conn = ConnectionUtils.getConnection(); 
-
+				
 				// Step 2:Create a statement using connection object
 				PreparedStatement preparedStatement = conn.prepareStatement(INSERT_USERS_SQL)) 
-		{
+		{	
+			
+			if (DBUtils.findUser(conn, user.getUserName()) != null) {
+				//user already exists
+				return -1;
+			};
+			
+			
 			// preparedStatement.setInt(1, 1);
 			preparedStatement.setString(1, user.getUserName());
 			preparedStatement.setString(2, user.getEmail());
@@ -34,7 +42,7 @@ public class UserDAO {
 			// process sql exception
 			printSQLException(e);
 		}
-		return result;
+		return 1;
 	}
 
 	private void printSQLException(SQLException ex) {

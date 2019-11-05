@@ -7,14 +7,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import beans.User;
 import beans.UserDAO;
+
 
 @WebServlet("/Register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDAO userDAO;
+	private int result;
        
 	public void init() {
         userDAO = new UserDAO();
@@ -33,22 +34,45 @@ public class RegisterServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String password2 = request.getParameter("password2");
+		String errorString = "";
 		
 		User user = new User();
 		user.setUserName(username);
 		user.setEmail(email);
 		user.setPassword(password);
 		
-		try {
-			
-            userDAO.registerUser(user);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-        	
-            e.printStackTrace();
-        }
-		//System.out.println("redirect");
-		response.sendRedirect("login.jsp");
+		if(!password.equals(password2)) {
+			errorString = "Password mismatch!";
+        	request.setAttribute("errorString", errorString);			
+        	request.setAttribute("resultREG", -1);
+			//System.out.println(request.getAttribute("errorString"));
+			response.sendRedirect("register.jsp");
+		}else {
+	        try {
+	    		result = userDAO.registerUser(user);
+	    		if(result == -1) {
+	    			errorString =  "User already exists";
+	    			
+	    			request.setAttribute("errorString", errorString);			
+	    			request.setAttribute("resultREG", -1);
+	    			//System.out.println(request.getAttribute("resultREG"));
+	    			
+	    			request.getRequestDispatcher("register.jsp").forward(request, response);
+	    		}else {
+	    			response.sendRedirect("login.jsp");
+	    		}
+	    			
+	            } catch (Exception e) {
+	                // TODO Auto-generated catch block
+	             	
+	                e.printStackTrace();
+	            }
+		}
+        
+		
+		
+		
 	}
 
 }

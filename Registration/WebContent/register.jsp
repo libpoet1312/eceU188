@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.net.URI"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +25,12 @@
 						<!-- Background image for card set in CSS! -->
 					</div>
 					<div class="card-body">
+						
+						<c:if test="${resultREG < 0}">
+          					<h4 style="color:red;text-align:center"><b><c:out value="${errorString}"/></b> </h4>
+          				</c:if>
+          				
+           				
 						<h5 class="card-title text-center">Register</h5>
 						<form class="form-signin" method="POST" action="<%= request.getContextPath() %>/Register">
 							<div class="form-label-group">
@@ -46,7 +54,7 @@
 							</div>
 
 							<div class="form-label-group">
-								<input type="password" id="inputConfirmPassword"
+								<input type="password" id="inputConfirmPassword" name="password2"
 									class="form-control" placeholder="Password" required> <label
 									for="inputConfirmPassword">Confirm password</label>
 							</div>
