@@ -55,7 +55,7 @@
 								target="_blank">Github</a>
 						</p>
 						<p style="text-align: center; font-weight: bold;">
-							Project page on <a href="https://github.com/libpoet1312/eceU188"
+							Project page on <a href="https://github.com/libpoet1312/eceU188/tree/master/RegistrationJPA"
 								target="_blank">Github</a>
 						</p>
 					</div>
